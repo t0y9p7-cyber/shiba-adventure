@@ -27,7 +27,6 @@ p {
     font-weight: bold;
 }
 
-/* 新增：手機控制按鈕樣式 */
 .controls {
     display: flex;
     justify-content: space-around;
