@@ -32,14 +32,16 @@ let lives = 3;
 let gameOver = false;
 
 // --- 圖片載入 ---
+// 請將「你的儲存庫名稱」替換成你實際的 GitHub 儲存庫名稱！
+const repoName = '你的儲存庫名稱'; // 例如：'shiba-adventure'
 const shibaImg = new Image();
-shibaImg.src = 'shiba.png';
+shibaImg.src = './' + repoName + '/shiba.png';
 
 const chickenLegImg = new Image();
-chickenLegImg.src = 'chicken_leg.png';
+chickenLegImg.src = './' + repoName + '/chicken_leg.png';
 
 const nailClipperImg = new Image();
-nailClipperImg.src = 'nail_clipper.png';
+nailClipperImg.src = './' + repoName + '/nail_clipper.png';
 
 let loadedImages = 0;
 const totalImages = 3;
