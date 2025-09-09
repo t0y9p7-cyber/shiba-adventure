@@ -32,20 +32,15 @@ let lives = 3;
 let gameOver = false;
 
 // --- 圖片載入 ---
-// 請在此替換成你的 GitHub 儲存庫名稱！
-const repoName = '你的儲存庫名稱'; 
-
-// 使用一個絕對路徑，確保無論在哪個環境都能正確找到檔案
-const basePath = `/${repoName}/`;
-
+// 使用最簡單的相對路徑，只要檔案在同一個資料夾，這個路徑永遠不會出錯。
 const shibaImg = new Image();
-shibaImg.src = basePath + 'shiba.png';
+shibaImg.src = 'shiba.png';
 
 const chickenLegImg = new Image();
-chickenLegImg.src = basePath + 'chicken_leg.png';
+chickenLegImg.src = 'chicken_leg.png';
 
 const nailClipperImg = new Image();
-nailClipperImg.src = basePath + 'nail_clipper.png';
+nailClipperImg.src = 'nail_clipper.png';
 
 let loadedImages = 0;
 const totalImages = 3;
