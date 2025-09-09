@@ -32,8 +32,11 @@ let lives = 3;
 let gameOver = false;
 
 // --- 圖片載入 ---
-// 這個聰明的邏輯會自動判斷路徑，你不需要再手動修改任何東西！
-const basePath = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1);
+// 請在此替換成你的 GitHub 儲存庫名稱！
+const repoName = '你的儲存庫名稱'; 
+
+// 使用一個絕對路徑，確保無論在哪個環境都能正確找到檔案
+const basePath = `/${repoName}/`;
 
 const shibaImg = new Image();
 shibaImg.src = basePath + 'shiba.png';
