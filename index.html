@@ -3,13 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>豆醬愛吃雞腿</title> <link rel="stylesheet" href="style.css">
+    <title>豆醬愛吃雞腿</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <h1>豆醬愛吃雞腿</h1> <canvas id="gameCanvas" width="800" height="600"></canvas>
+    <h1>豆醬愛吃雞腿</h1>
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
     <p>分數：<span id="score">0</span></p>
-    <p>生命：<span id="lives">3</span></p> <script src="game.js"></script>
+    <p>生命：<span id="lives">3</span></p>
+
+    <div class="controls">
+        <div id="left-button" class="control-button">←</div>
+        <div id="jump-button" class="control-button">↑</div>
+        <div id="right-button" class="control-button">→</div>
+    </div>
+
+    <script src="game.js"></script>
 
 </body>
 </html>

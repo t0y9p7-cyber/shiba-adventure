@@ -32,8 +32,7 @@ let lives = 3;
 let gameOver = false;
 
 // --- 圖片載入 ---
-// 請將「你的儲存庫名稱」替換成你實際的 GitHub 儲存庫名稱！
-const repoName = '你的儲存庫名稱'; // 例如：'shiba-adventure'
+const repoName = '你的儲存庫名稱'; // 請在此替換成你的 GitHub 儲存庫名稱！
 const shibaImg = new Image();
 shibaImg.src = './' + repoName + '/shiba.png';
 
@@ -72,17 +71,17 @@ function generateObject() {
 
 // 檢查碰撞
 function checkCollision(obj1, obj2) {
-    // 檢查矩形是否重疊
     return obj1.x < obj2.x + obj2.width &&
            obj1.x + obj1.width > obj2.x &&
            obj1.y < obj2.y + obj2.height &&
            obj1.y + obj1.height > obj2.y;
 }
 
-// --- 鍵盤控制 ---
+// --- 鍵盤和觸控控制 ---
 let rightPressed = false;
 let leftPressed = false;
 
+// 鍵盤控制
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Right' || e.key === 'ArrowRight') {
         rightPressed = true;
@@ -99,6 +98,34 @@ document.addEventListener('keyup', (e) => {
         rightPressed = false;
     } else if (e.key === 'Left' || e.key === 'ArrowLeft') {
         leftPressed = false;
+    }
+});
+
+// 新增：觸控控制
+const leftButton = document.getElementById('left-button');
+const rightButton = document.getElementById('right-button');
+const jumpButton = document.getElementById('jump-button');
+
+leftButton.addEventListener('touchstart', () => { leftPressed = true; });
+leftButton.addEventListener('touchend', () => { leftPressed = false; });
+leftButton.addEventListener('mousedown', () => { leftPressed = true; });
+leftButton.addEventListener('mouseup', () => { leftPressed = false; });
+
+rightButton.addEventListener('touchstart', () => { rightPressed = true; });
+rightButton.addEventListener('touchend', () => { rightPressed = false; });
+rightButton.addEventListener('mousedown', () => { rightPressed = true; });
+rightButton.addEventListener('mouseup', () => { rightPressed = false; });
+
+jumpButton.addEventListener('touchstart', () => {
+    if (!isJumping) {
+        isJumping = true;
+        jumpVelocity = jumpPower;
+    }
+});
+jumpButton.addEventListener('mousedown', () => {
+    if (!isJumping) {
+        isJumping = true;
+        jumpVelocity = jumpPower;
     }
 });
 
@@ -124,14 +151,10 @@ function gameLoop() {
         return;
     }
 
-    // 1. 清空畫布
     ctx.clearRect(0, 0, gameWidth, gameHeight);
-
-    // 2. 繪製所有遊戲元素
     drawShiba();
     updateHUD();
 
-    // 處理雞腿和指甲刀的邏輯
     frameCount++;
     if (frameCount % 120 === 0) {
         generateObject();
@@ -143,7 +166,6 @@ function gameLoop() {
         ctx.drawImage(obj.img, obj.x, obj.y, objectWidth, objectHeight);
         obj.y += objectSpeed;
 
-        // 碰撞偵測
         if (checkCollision({
             x: shibaX,
             y: shibaY,
@@ -168,21 +190,18 @@ function gameLoop() {
             i--;
         }
         
-        // 檢查是否超出畫面
         if (obj.y > gameHeight) {
             objects.splice(i, 1);
             i--;
         }
     }
     
-    // 3. 更新柴犬的位置 (根據按鍵狀態)
     if (rightPressed && shibaX < gameWidth - shibaWidth) {
         shibaX += shibaSpeed;
     } else if (leftPressed && shibaX > 0) {
         shibaX -= shibaSpeed;
     }
 
-    // 跳躍邏輯
     if (isJumping) {
         shibaY += jumpVelocity;
         jumpVelocity += gravity;
@@ -193,6 +212,5 @@ function gameLoop() {
         jumpVelocity = 0;
     }
 
-    // 5. 循環執行這個函數
     requestAnimationFrame(gameLoop);
 }

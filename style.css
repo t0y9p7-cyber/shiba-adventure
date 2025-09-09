@@ -26,3 +26,26 @@ p {
     font-size: 1.5em;
     font-weight: bold;
 }
+/* 新增：手機控制按鈕樣式 */
+.controls {
+    display: flex;
+    justify-content: space-around;
+    width: 80%;
+    margin-top: 20px;
+}
+
+.control-button {
+    background-color: #3498db;
+    color: white;
+    font-size: 2em;
+    font-weight: bold;
+    padding: 15px 25px;
+    border-radius: 10px;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.2s;
+}
+
+.control-button:active {
+    background-color: #2980b9;
+}
