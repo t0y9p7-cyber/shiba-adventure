@@ -32,15 +32,26 @@ let lives = 3;
 let gameOver = false;
 
 // --- 圖片載入 ---
-const repoName = '你的儲存庫名稱'; // 請在此替換成你的 GitHub 儲存庫名稱！
+// 請在此替換成你的 GitHub 儲存庫名稱！
+// 例如：如果你的儲存庫是 https://yourusername.github.io/shiba-adventure/
+// 則 repoName = 'shiba-adventure';
+const repoName = '你的儲存庫名稱'; 
+
+// 判斷當前環境的路徑
+// 如果網址包含 'github.io' 和 repoName，就使用 GitHub Pages 的路徑
+// 否則，假設是在本機開發，使用相對路徑
+const basePath = window.location.href.includes('github.io') && window.location.href.includes(repoName)
+    ? './' + repoName + '/'
+    : './'; // 本機開發時的路徑
+
 const shibaImg = new Image();
-shibaImg.src = './' + repoName + '/shiba.png';
+shibaImg.src = basePath + 'shiba.png';
 
 const chickenLegImg = new Image();
-chickenLegImg.src = './' + repoName + '/chicken_leg.png';
+chickenLegImg.src = basePath + 'chicken_leg.png';
 
 const nailClipperImg = new Image();
-nailClipperImg.src = './' + repoName + '/nail_clipper.png';
+nailClipperImg.src = basePath + 'nail_clipper.png';
 
 let loadedImages = 0;
 const totalImages = 3;
@@ -102,32 +113,39 @@ document.addEventListener('keyup', (e) => {
 });
 
 // 新增：觸控控制
+// 檢查按鈕是否存在，因為在開發工具中可能沒按鈕
 const leftButton = document.getElementById('left-button');
 const rightButton = document.getElementById('right-button');
 const jumpButton = document.getElementById('jump-button');
 
-leftButton.addEventListener('touchstart', () => { leftPressed = true; });
-leftButton.addEventListener('touchend', () => { leftPressed = false; });
-leftButton.addEventListener('mousedown', () => { leftPressed = true; });
-leftButton.addEventListener('mouseup', () => { leftPressed = false; });
+if (leftButton) {
+    leftButton.addEventListener('touchstart', (e) => { e.preventDefault(); leftPressed = true; }); // 阻止預設捲動行為
+    leftButton.addEventListener('touchend', () => { leftPressed = false; });
+    leftButton.addEventListener('mousedown', () => { leftPressed = true; });
+    leftButton.addEventListener('mouseup', () => { leftPressed = false; });
+}
+if (rightButton) {
+    rightButton.addEventListener('touchstart', (e) => { e.preventDefault(); rightPressed = true; }); // 阻止預設捲動行為
+    rightButton.addEventListener('touchend', () => { rightPressed = false; });
+    rightButton.addEventListener('mousedown', () => { rightPressed = true; });
+    rightButton.addEventListener('mouseup', () => { rightPressed = false; });
+}
+if (jumpButton) {
+    jumpButton.addEventListener('touchstart', (e) => {
+        e.preventDefault(); // 阻止預設捲動行為
+        if (!isJumping) {
+            isJumping = true;
+            jumpVelocity = jumpPower;
+        }
+    });
+    jumpButton.addEventListener('mousedown', () => {
+        if (!isJumping) {
+            isJumping = true;
+            jumpVelocity = jumpPower;
+        }
+    });
+}
 
-rightButton.addEventListener('touchstart', () => { rightPressed = true; });
-rightButton.addEventListener('touchend', () => { rightPressed = false; });
-rightButton.addEventListener('mousedown', () => { rightPressed = true; });
-rightButton.addEventListener('mouseup', () => { rightPressed = false; });
-
-jumpButton.addEventListener('touchstart', () => {
-    if (!isJumping) {
-        isJumping = true;
-        jumpVelocity = jumpPower;
-    }
-});
-jumpButton.addEventListener('mousedown', () => {
-    if (!isJumping) {
-        isJumping = true;
-        jumpVelocity = jumpPower;
-    }
-});
 
 // 繪製柴犬
 function drawShiba() {
